@@ -1,0 +1,31 @@
+
+Thank Justin for your comment. In fact, I have a nonlinear system (nonlinear in the sense that there are products between the variables, e.g., z0*z11). An example of what I am looking for is:
+
+```
+Solve[{
+1-(2/3)*z11  ==  (1-gamR)*(1-(2/3)*zR0*zR10)+gamR*(1-(2/3)*zR10) , 
+(1/3)*z11  ==  (1-gamR)*(1/3)*zR0*zR10+gamR*(1/3)*zR10 , 
+(1/3)*z11  ==  (1-gamR)*(1/3)*zR0*zR10+gamR*(1/3)*zR10 , 
+(1-gam)*(1-(2/3)*z11)+gam*(1-(2/3)*z0*z11)  ==  (1-gamR)*(1-(2/3)*zR1*zR0*zR10)+gamR*(1-(2/3)*zR10) , 
+(1-gam)*(1/3)*z11+gam*(1/3)*z0*z11  ==  (1-gamR)*(1/3)*zR1*zR0*zR10+gamR*(1/3)*zR10 , 
+(1-gam)*(1/3)*z11+gam*(1/3)*z0*z11  ==  (1-gamR)*(1/3)*zR1*zR0*zR10+gamR*(1/3)*zR10 , 
+(1-gam)*(1-(2/3)*z1)+gam*(1/3)*z0  ==  (1-gamR)*(1-(2/3)*zR1)+gamR*(1/3)*zR0 ,
+(1-gam)*(1/3)*z1+gam*(1-(2/3)*z0)  ==  (1-gamR)*(1/3)*zR1+gamR*(1-(2/3)*zR0) ,
+(1-gam)*(1/3)*z1+gam*(1/3)*z0  ==  (1-gamR)*(1/3)*zR1+gamR*(1/3)*zR0 , 
+(1-gam)*(1-(2/3)*z1*z11)+gam*(1-(2/3)*z11)  ==  1-(2/3)*zR0*zR10 , 
+(1-gam)*(1/3)*z1*z11+gam*(1/3)*z11  ==  (1/3)*zR0*zR10 , 
+(1-gam)*(1/3)*z1*z11+gam*(1/3)*z11  ==  (1/3)*zR0*zR10 }, 
+{ z0, z1, z11, zR0, zR1, zR10, gam, gamR }]
+```
+
+
+And what I am looking for are the regions like this
+```
+{z1 -> zR1, z11 -> 0, zR0 -> 0, gam -> 0, gamR -> 0}
+```
+where all the equations are fulfilled. This regions tell me the restrictions that fulfill the equations. 
+
+Best regards, 
+A
+
+

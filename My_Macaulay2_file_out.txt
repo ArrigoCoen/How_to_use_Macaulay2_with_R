@@ -1,0 +1,26 @@
+Macaulay2, version 1.15
+--loading configuration for package "FourTiTwo" from file /Users/arrigocoen/Library/Application Support/Macaulay2/init-FourTiTwo.m2
+--loading configuration for package "Topcom" from file /Users/arrigocoen/Library/Application Support/Macaulay2/init-Topcom.m2
+with packages: ConwayPolynomials, Elimination, IntegralClosure, InverseSystems, LLLBases, PrimaryDecomposition, ReesAlgebra, TangentCone, Truncations
+
+i1 : R = QQ[z0,z1,z11,zR0,zR1,zR10,gam,gamR]
+
+o1 = R
+
+o1 : PolynomialRing
+
+i2 : I = ideal(1-(2/3)*z11-(1-gamR)*(1-(2/3)*zR0*zR10)+gamR*(1-(2/3)*zR10),(1/3)*z11-(1-gamR)*(1/3)*zR0*zR10+gamR*(1/3)*zR10,(1/3)*z11-(1-gamR)*(1/3)*zR0*zR10+gamR*(1/3)*zR10,(1-gam)*(1-(2/3)*z11)+gam*(1-(2/3)*z0*z11)-(1-gamR)*(1-(2/3)*zR1*zR0*zR10)+gamR*(1-(2/3)*zR10),(1-gam)*(1/3)*z11+gam*(1/3)*z0*z11-(1-gamR)*(1/3)*zR1*zR0*zR10+gamR*(1/3)*zR10,(1-gam)*(1/3)*z11+gam*(1/3)*z0*z11-(1-gamR)*(1/3)*zR1*zR0*zR10+gamR*(1/3)*zR10,(1-gam)*(1-(2/3)*z1)+gam*(1/3)*z0-(1-gamR)*(1-(2/3)*zR1)+gamR*(1/3)*zR0,(1-gam)*(1/3)*z1+gam*(1-(2/3)*z0)-(1-gamR)*(1/3)*zR1+gamR*(1-(2/3)*zR0),(1-gam)*(1/3)*z1+gam*(1/3)*z0-(1-gamR)*(1/3)*zR1+gamR*(1/3)*zR0,(1-gam)*(1-(2/3)*z1*z11)+gam*(1-(2/3)*z11)-1-(2/3)*zR0*zR10,(1-gam)*(1/3)*z1*z11+gam*(1/3)*z11-(1/3)*zR0*zR10,(1-gam)*(1/3)*z1*z11+gam*(1/3)*z11-(1/3)*zR0*zR10)
+
+              2                2           2            2             1                1           1            1     1                1           1            1       2                    2               2             2          2            2             1                    1               1             1          1            1     1                    1               1             1          1            1     1         2         1           2           2     2                    2         1         2           1           1     1                  1         1         1           1           1     1     2             2         2           2           1             1         1           1           1             1         1           1
+o2 = ideal (- -zR0*zR10*gamR + -zR0*zR10 - -zR10*gamR - -z11 + 2gamR, -zR0*zR10*gamR - -zR0*zR10 + -zR10*gamR + -z11, -zR0*zR10*gamR - -zR0*zR10 + -zR10*gamR + -z11, - -zR0*zR1*zR10*gamR + -zR0*zR1*zR10 - -z0*z11*gam + -z11*gam - -zR10*gamR - -z11 + 2gamR, -zR0*zR1*zR10*gamR - -zR0*zR1*zR10 + -z0*z11*gam - -z11*gam + -zR10*gamR + -z11, -zR0*zR1*zR10*gamR - -zR0*zR1*zR10 + -z0*z11*gam - -z11*gam + -zR10*gamR + -z11, -z0*gam + -z1*gam + -zR0*gamR - -zR1*gamR - -z1 + -zR1 - gam + gamR, - -z0*gam - -z1*gam - -zR0*gamR + -zR1*gamR + -z1 - -zR1 + gam + gamR, -z0*gam - -z1*gam + -zR0*gamR + -zR1*gamR + -z1 - -zR1, -z1*z11*gam - -z1*z11 - -zR0*zR10 - -z11*gam, - -z1*z11*gam + -z1*z11 - -zR0*zR10 + -z11*gam, - -z1*z11*gam + -z1*z11 - -zR0*zR10 + -z11*gam)
+              3                3           3            3             3                3           3            3     3                3           3            3       3                    3               3             3          3            3             3                    3               3             3          3            3     3                    3               3             3          3            3     3         3         3           3           3     3                    3         3         3           3           3     3                  3         3         3           3           3     3     3             3         3           3           3             3         3           3           3             3         3           3
+
+o2 : Ideal of R
+
+i3 : primaryDecomposition I
+
+o3 = {ideal (gamR, zR10, z11, z0 - 1, z1*gam - z1 + zR1 - gam), ideal (gamR, gam, zR10, z11, z1 - zR1), ideal (gamR, zR0, z11, z0 - 1, z1*gam - z1 + zR1 - gam), ideal (gamR, gam, zR0, z11, z1 - zR1)}
+
+o3 : List
+
+i4 : 

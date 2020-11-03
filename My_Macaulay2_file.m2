@@ -1,3 +1,10 @@
-R = QQ[z0,z1,z11,zR0,zR1,zR10,gam,gamR]
-I = ideal(1-(2/3)*z11-(1-gamR)*(1-(2/3)*zR0*zR10)+gamR*(1-(2/3)*zR10),(1/3)*z11-(1-gamR)*(1/3)*zR0*zR10+gamR*(1/3)*zR10,(1/3)*z11-(1-gamR)*(1/3)*zR0*zR10+gamR*(1/3)*zR10,(1-gam)*(1-(2/3)*z11)+gam*(1-(2/3)*z0*z11)-(1-gamR)*(1-(2/3)*zR1*zR0*zR10)+gamR*(1-(2/3)*zR10),(1-gam)*(1/3)*z11+gam*(1/3)*z0*z11-(1-gamR)*(1/3)*zR1*zR0*zR10+gamR*(1/3)*zR10,(1-gam)*(1/3)*z11+gam*(1/3)*z0*z11-(1-gamR)*(1/3)*zR1*zR0*zR10+gamR*(1/3)*zR10,(1-gam)*(1-(2/3)*z1)+gam*(1/3)*z0-(1-gamR)*(1-(2/3)*zR1)+gamR*(1/3)*zR0,(1-gam)*(1/3)*z1+gam*(1-(2/3)*z0)-(1-gamR)*(1/3)*zR1+gamR*(1-(2/3)*zR0),(1-gam)*(1/3)*z1+gam*(1/3)*z0-(1-gamR)*(1/3)*zR1+gamR*(1/3)*zR0,(1-gam)*(1-(2/3)*z1*z11)+gam*(1-(2/3)*z11)-1-(2/3)*zR0*zR10,(1-gam)*(1/3)*z1*z11+gam*(1/3)*z11-(1/3)*zR0*zR10,(1-gam)*(1/3)*z1*z11+gam*(1/3)*z11-(1/3)*zR0*zR10)
+--------------------------------------------------------
+-- Parameters identifiability for the general network --
+--------------------------------------------------------
+-- K = 3
+-- How many equations: _all
+-- Date of creation: Fri May 01 16:10:40 2020
+
+R = QQ[x,y,z]
+I = ideal(x-2*y+3z-7,2*x+y+z-4,-3*x+2*y-2*z+10)
 primaryDecomposition I

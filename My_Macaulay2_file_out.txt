@@ -3,7 +3,14 @@ Macaulay2, version 1.15
 --loading configuration for package "Topcom" from file /Users/arrigocoen/Library/Application Support/Macaulay2/init-Topcom.m2
 with packages: ConwayPolynomials, Elimination, IntegralClosure, InverseSystems, LLLBases, PrimaryDecomposition, ReesAlgebra, TangentCone, Truncations
 
-i1 : R = QQ[z0,z1,z11,zR0,zR1,zR10,gam,gamR]
+i1 : --------------------------------------------------------
+     -- Parameters identifiability for the general network --
+     --------------------------------------------------------
+     -- K = 3
+     -- How many equations: _all
+     -- Date of creation: Fri May 01 16:10:40 2020
+     
+     R = QQ[z0,z1,z11,zR0,zR1,zR10,gam,gamR]
 
 o1 = R
 

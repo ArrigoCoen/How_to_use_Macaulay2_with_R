@@ -1,0 +1,54 @@
+Macaulay2, version 1.15
+--loading configuration for package "FourTiTwo" from file /Users/arrigocoen/Library/Application Support/Macaulay2/init-FourTiTwo.m2
+--loading configuration for package "Topcom" from file /Users/arrigocoen/Library/Application Support/Macaulay2/init-Topcom.m2
+with packages: ConwayPolynomials, Elimination, IntegralClosure, InverseSystems, LLLBases, PrimaryDecomposition, ReesAlgebra, TangentCone, Truncations
+
+i1 : -- Intro
+     
+     K = frac(QQ[a,b,c,d])
+
+o1 = K
+
+o1 : FractionField
+
+i2 : R = K[x,y,z]
+
+o2 = R
+
+o2 : PolynomialRing
+
+i3 : m = matrix{{a*x + b*y + c*z, 3*x + 4*y + 5*z, 7*x + 7*y + 8*z}}
+
+o3 = | ax+by+cz 3x+4y+5z 7x+7y+8z |
+
+             1       3
+o3 : Matrix R  <--- R
+
+i4 : B = matrix{{d}, {6}, {9}}
+
+o4 = | d |
+     | 6 |
+     | 9 |
+
+             3       1
+o4 : Matrix K  <--- K
+
+i5 : A = transpose(m // vars R)
+
+o5 = {-1} | a b c |
+     {-1} | 3 4 5 |
+     {-1} | 7 7 8 |
+
+             3       3
+o5 : Matrix R  <--- R
+
+i6 : (inverse A)*B
+
+o6 = {-1} | (3b-6c+3d)/(3a-11b+7c)    |
+     {-1} | (-3a+15c-11d)/(3a-11b+7c) |
+     {-1} | (6a-15b+7d)/(3a-11b+7c)   |
+
+             3       1
+o6 : Matrix R  <--- R
+
+i7 : 

@@ -120,7 +120,7 @@ idx_Nj <- 2
 N_quartet_allowed <- c(1,1,1,2)
 
 
-
+ 
 
 all_text <- text_Solve_Ni_vr_Nj_M2(idx_Ni,idx_Nj,N_quartet_allowed,SUB_mat_eq_rotated_EXTENDED)
 

@@ -48,7 +48,64 @@ To do this automatically using R, we could run the next commands
 run_M2_Terminal_using_R(input_file_name,output_file_name,input_folder_m2_files,output_folder_m2_files)
 ```
 
+I can not find a way to run Macaulay from R since I try to run something like (the first system() call does not give problems, the second one is the problematic)
+```
+terminal_command <- "cd '/Users/arrigocoen/Dropbox/GitHub/2020 Arrigo Repos/How_to_use_Macaulay2_with_R/Test_folder'"
+system(terminal_command)
+terminal_command <- "cat '/Users/arrigocoen/Dropbox/GitHub/2020 Arrigo Repos/How_to_use_Macaulay2_with_R/Test_folder/Macaulay2_file.m2' | M2 &> '/Users/arrigocoen/Dropbox/GitHub/2020 Arrigo Repos/How_to_use_Macaulay2_with_R/Test_folder/Macaulay2_file_out.txt'"
+system(terminal_command)
+```
+and get the error message:
+```
+cat: stdout: Broken pipe
+Warning message:
+In system(terminal_command) : error in running command
+```
+wich is weird since I cuold type the commands directly in the Terminal and they run without problems.
+
+
+
+
+
 ## From M2 output to LaTeX
+
+In some cases it is needed to transform the ouput of Macualay2 to use analyze it. For instance, the way that Macaulay2 handles exponents is to print them in a different line, as is presented in the next figure (from the file 'Macaulay2_output/Macaulay2_file_long_output_out.txt')
+
+![alt text](Figures/Fig_ex_exponents.png)
+
+Also, Macualay2 uses strings of hyphens to separate lines; an example of this is presented in the next figure (from the file `K8_subN11211_out.txt`)
+
+![alt text](Figures/Fig_ex_hyphens.png)
+
+We transform this by:
+- Selecting the output that is desired to correct. This is done by selecting the output-number and attach it to the variable `idx_output`. To exemplify, let us assume that we define `idx_output=3`
+- With this number of output we extract the proper lines of the txt file. This is done by selecting from the previous line (in case that it contains the power the output line) until the line of the with the colon. In our example, we found the line with `o3 = ` and stop until finding `o3 : `. So, we obtain a vector with each line between this marks.
+- In this vector we eliminate the lines that are only hyphens and we combine the lines of exponents with their respective equations.
+
+The extraction of the vector is done by the function `raw_text_output_vector_text_M2` and its transformation by the function `add_powers_and_errase_extra_lines`. An example of this is done by:
+```
+txt_file <- 'Macaulay2_output/K8_allN11122_out.txt' # Example with a line of the type: "-----------" and exponents
+data_txt = read.table(txt_file, fill = F, header = FALSE , sep = "\t")
+idx_output <- 3
+text_equation <- raw_text_output_vector_text_M2(idx_output,data_txt)
+text_equation <- add_powers_and_errase_extra_lines(text_equation)
+text_equation
+```
+
+Moreover, if the output if given compose of multiple `Ideal(...)` we could use the next code to transform it
+```
+vec_ideals <- extracting_all_ideal_equations(text_equation)
+```
+With this last line we obtain a vector such that each of its entries is the inside equations of the ideals.
+
+
+An example of a long output could be obtain using
+```shell
+cd '/Users/arrigocoen/Dropbox/GitHub/2020 Arrigo Repos/How_to_use_Macaulay2_with_R'
+cat 'Macaulay2_files/SolveK4_N_allow1112_for_N1vrN2.m2' | M2 &> 'Macaulay2_output/Macaulay2_file_long_output_out.txt'
+```
+
+
 
 
 

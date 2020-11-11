@@ -1,0 +1,63 @@
+Macaulay2, version 1.15
+--loading configuration for package "FourTiTwo" from file /Users/arrigocoen/Library/Application Support/Macaulay2/init-FourTiTwo.m2
+--loading configuration for package "Topcom" from file /Users/arrigocoen/Library/Application Support/Macaulay2/init-Topcom.m2
+with packages: ConwayPolynomials, Elimination, IntegralClosure, InverseSystems, LLLBases, PrimaryDecomposition, ReesAlgebra, TangentCone, Truncations
+
+i1 : --------------------------------------------------------
+     -- Parameters identifiability for the general network --
+     --------------------------------------------------------
+     -- file name = K8_subN11121.m2
+     -- K = 8
+     -- How many equations: _sub
+     -- Date of creation: Sun May 10 12:58:37 2020
+     -- To run in console: cat K8_subN11121.m2 | M2 &> K8_subN11121_out.txt
+     -- For K = 8 are 135 equations but we only consider here 15
+     -- a's = a5,a20,a26,a29,a30,a59,a65,a68,a69,a80,a83,a89,a90,a92,a93
+     -- z's = z0,z3,z4,z5,z6,z7,z17
+     
+     
+     R = QQ[gam,a5,a20,a26,a29,a30,a59,a65,a68,a69,a80,a83,a89,a90,a92,a93,z0,z3,z4,z5,z6,z7,z17]
+
+o1 = R
+
+o1 : PolynomialRing
+
+i2 :                     
+     I = ideal(
+     (1-gam)*(1/3)*z0*z17+gam*(1/3)*z17-a5,
+     (1/3)*z17-a20,
+     (1-gam)*(1/3)*z17+gam*(1/3)*z3*z4*z5*z6*z7*z17-a26,
+     (1-gam)*(1/3)*z0+gam*(1-(2/3)*z3*z4*z5*z6*z7)-a29,
+     (1-gam)*(1/3)*z0+gam*(1/3)*z3*z4*z5*z6*z7-a30,
+     (1/3)*z17-a59,
+     (1-gam)*(1/3)*z17+gam*(1/3)*z4*z5*z6*z7*z17-a65,
+     (1-gam)*(1/3)*z0+gam*(1-(2/3)*z3)-a68,
+     (1-gam)*(1/3)*z0+gam*(1/3)*z3-a69,
+     (1/3)*z4*z5*z6*z7*z17-a80,
+     (1/3)*z4*z5*z6*z7-a83,
+     (1-gam)*(1/3)*z4*z5*z6*z7+gam*(1-(2/3)*z3)-a89,
+     (1-gam)*(1/3)*z4*z5*z6*z7+gam*(1/3)*z3-a90,
+     (1-gam)*(1/3)*z4*z5*z6*z7*z0+gam*(1-(2/3)*z3)-a92,
+     (1-gam)*(1/3)*z4*z5*z6*z7*z0+gam*(1/3)*z3-a93
+     );
+
+o2 : Ideal of R
+
+i3 : 
+     G = eliminate(I,{gam,z0,z3,z4,z5,z6,z7,z17})
+
+                                                                                                                                                                                                                                                                                                                                                                                                                         
+o3 = ideal (a89 - a90 - a92 + a93, a68 - a69 - a92 + a93, a29 + 2a30 - 3a69 - a92 + a93, a20 - a59, a83*a92 - a83*a93 + a30 - a69 - a83 + a90, a80*a92 - a80*a93 + a26 - a65, 3a59*a90 + a59*a92 - a59*a93 - a59 + a65 - a80, 3a69*a83 - a30 + a69 - a93, 3a65*a83 - 3a80*a83 + 3a80*a90 - a26 + a65 - a80, 3a59*a83 - a80, 3a5*a83 - a59*a92 - 2a59*a93 + a59 - a65, 3a69*a80 - a59*a92 - 2a59*a93 - a26 + a59, 3a30*a80
+     ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                                                                                          2                                                                   2
+     - 3a26*a83 - a59*a92 - 2a59*a93 + a59 - a65 + a80, 3a65*a69 + 3a5*a90 + a5*a92 - a59*a92 + a65*a92 - a5*a93 - 2a59*a93 - a65*a93 - a5 + a59 - a65, 3a59*a69 + a59*a92 - a59*a93 - a5, 3a30*a69 - 3a69  + 3a69*a90 + a30*a92 - a69*a92 - a30*a93 + a69*a93 + a92*a93 - a93  - a30 + a69 - a93, 3a30*a65 - 3a26*a83 + 3a5*a90 + 3a26*a90 + a5*a92 + a26*a92 - a59*a92 - a5*a93 - a26*a93 - 2a59*a93 - a5 - a26 + a59,
+     ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     3a30*a59 - a5 - a26 + a59, 3a5*a30 - 3a5*a69 - 3a26*a69 - a5*a92 - a26*a92 + a5*a93 + a26*a93 + a5)
+
+o3 : Ideal of R
+
+i4 : dim G 
+
+o4 = 13
+
+i5 : 

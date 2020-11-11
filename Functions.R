@@ -15,6 +15,12 @@
 #
 
 
+
+# LIBRARIES ---------------------------------------------------------------
+
+library(stringr) # to use function "str_trim"
+
+
 # soatnuh -----------------------------------------------------------------
 
 
@@ -92,3 +98,168 @@ gen_eq_solver_text_for_m2_files <- function(vec_variables, vec_equations) {
   text_to_run = c(text_R, text_I,text_primaryI)
   return(text_to_run)
 }
+
+
+#' Given the output of read.table and a phrase_to_look_at this function returns the 
+#' indext where the phrase was found
+#'
+#' @param data_txt output of a read.table function
+#' @param phrase_to_look_at string that will be look for at the begging of each line
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' txt_file <- 'Macaulay2_output/Macaulay2_file_long_output_out.txt'
+#' txt_file <- '/Users/arrigocoen/Dropbox/GitHub/2020 Arrigo Repos/How_to_use_Macaulay2_with_R/Macaulay2_output/Macaulay2_file_long_output_out.txt'
+#' data_txt = read.table(txt_file, fill = F, header = FALSE , sep = "\t")
+#' phrase_to_look_at <- "o3 = {ideal ("
+#' idx_phrase <- find_index_of_phrase(data_txt,phrase_to_look_at)
+#' data_txt[idx_phrase,]
+find_index_of_phrase <- function(data_txt,phrase_to_look_at) {
+  unlist_mydata <- unlist(data_txt)
+  length_phrase <- nchar(phrase_to_look_at)
+  (idx_phrase <- which(substr(unlist_mydata,1,length_phrase)==phrase_to_look_at))
+  return(idx_phrase)
+}
+
+
+#' The vector of text for a particular output
+#' 
+#' Given the vector of text of a txt file, and an output numeber, this function
+#' returns the entries of the vector that contain the information of it.
+#'
+#' @param idx_output 
+#' @param data_txt 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' txt_file <- '/Users/arrigocoen/Dropbox/GitHub/2020 Arrigo Repos/How_to_use_Macaulay2_with_R/Macaulay2_output/Macaulay2_file_long_output_out.txt'
+#' data_txt = read.table(txt_file, fill = F, header = FALSE , sep = "\t")
+#' idx_output <- 3
+#' raw_text_output_vector_text_M2(idx_output,data_txt)
+raw_text_output_vector_text_M2 <- function(idx_output,data_txt) {
+  # In the Macaulay2 output is common for the expression to have the form
+  # "o3 = " and "o3 : ", for example in the case of idx_output=3. 
+  # The first represents the output and the second
+  # the type of variable is the output. Then we need to find the index 
+  # of the all the entries of the vector data_txt (in fact is a matrix)
+  # that contain the information of this output.
+  phrase_to_look_at <- paste0(c("o",idx_output," = "),collapse = "")
+  idx_ini_vec_text <- find_index_of_phrase(data_txt,phrase_to_look_at) -1
+  # In the case of the first row, we could be making the mistake of taking 
+  # the previous output. To solve this, we review this line to see if it is
+  # only numbers. If it is only numbers it is the powers of the next line,
+  # if not then we should not use it for the equation.
+  possible_first_row <- data_txt[idx_ini_vec_text,]
+  (possible_first_row_no_spaces <- gsub("\\s+", "", str_trim(possible_first_row)))
+  if(!suppressWarnings(!is.na(as.numeric(possible_first_row_no_spaces)))) idx_ini_vec_text <- idx_ini_vec_text+1
+  # The last line is selected as the line with a starting phrase as "o3 : ",
+  # in the case of "idx_output=3"
+  phrase_to_look_at <- paste0(c("o",idx_output," : "),collapse = "")
+  idx_fin_vec_text <- find_index_of_phrase(data_txt,phrase_to_look_at) -1
+  # text_equation is a vector with the text of the output of the idx_output 
+  text_equation <- data_txt[idx_ini_vec_text:idx_fin_vec_text,]
+  return(text_equation)
+}
+
+
+#' Correction of text of an equation
+#' 
+#' Given a vector with the text of an ouput of a Macaulay2 file, this function:
+#'     1) add the exponents to the proper places
+#'     2) eliminates the lines of the type "----------"
+#'
+#' @param text_equation 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' txt_file <- 'Macaulay2_output/Macaulay2_file_long_output_out.txt'
+#' txt_file <- '/Users/arrigocoen/Dropbox/GitHub/2020 Arrigo Repos/How_to_use_Macaulay2_with_R/Macaulay2_output/Macaulay2_file_long_output_out.txt'
+#' txt_file <- 'Macaulay2_output/K4_allN1222_out.txt' # Example with a line of the type: "-----------"
+#' 
+#' data_txt = read.table(txt_file, fill = F, header = FALSE , sep = "\t")
+#' idx_output <- 3
+#' text_equation <- raw_text_output_vector_text_M2(idx_output,data_txt)
+#' 
+#' add_powers_and_errase_extra_lines(text_equation) 
+add_powers_and_errase_extra_lines <- function(text_equation) {
+  
+  print_info <- F # only for pourpuses of debuging
+  vec_ii_for <- max(length(text_equation)-1,1):1
+  # text_equation contians the lines with the text between "o3 = ideal" and "o3 : Ideal of R" of the .txt file 
+  # (in the case that 'idx_output=3')
+  text_equation
+  # The next for loops over all the rows that make the invariants
+  for(ii in vec_ii_for) {
+    (current_row <- text_equation[ii])
+    (current_row_no_spaces <- gsub("\\s+", "", str_trim(current_row)))
+    if(print_info) cat("ii=",ii,"\n",current_row,"\n")
+    if(substr(current_row,1,20) == "     ---------------"){
+      text_equation <- text_equation[-ii]
+      if(print_info) cat("was eliminated because the spaces\n")
+      next
+    }
+    if(current_row_no_spaces == ""){
+      text_equation <- text_equation[-ii]
+      if(print_info) cat("was eliminated because the its empty\n")
+      next
+    }
+    # In case that the row has no letters, is a power of the next row
+    # and we extract its numbers
+    if(suppressWarnings(!is.na(as.numeric(current_row_no_spaces)))) {
+      exponents_found <- T
+      bellow_current_row <- text_equation[ii+1]
+      (posible_exponents <- current_row)
+      (idx_exponents <- unlist(gregexpr("[[:digit:]]+", current_row)))
+      vec_exponents <- regmatches(posible_exponents, gregexpr("[[:digit:]]+", posible_exponents)) # sin "+" se regresa un vector con cada dígito
+      (vec_exponents <- as.numeric(unlist(vec_exponents)))
+      # This for paste in the proper places the powers and add the strings "^{" and "}" arround it
+      for(jj in length(idx_exponents):1) {
+        (one_exponent_index <- idx_exponents[jj])
+        bellow_current_row <- paste0(substr(bellow_current_row,1,one_exponent_index-1),"^{",vec_exponents[jj],"}",substr(bellow_current_row,one_exponent_index,nchar(bellow_current_row)))
+      }
+      text_equation[ii+1] <- bellow_current_row
+      text_equation <- text_equation[-ii]
+      if(print_info) cat(" pasible power\n")
+      next
+    }
+    if(print_info) cat("normal row\n")
+  }
+  
+  text_equation <- paste(text_equation,collapse = "")
+  return(text_equation)
+}
+
+
+#' This function only etracts the inside information of the parenthesis, so
+#' I guessing that Macaulay don't uses parenthesis in its expressions.
+#' 
+#' for instance, 
+#' vec <- "(hola) como ((doble) y otro)"
+#' str_extract_all(vec, "\\([^()]+\\)")[[1]]
+#' returns
+#' "(hola)"  "(doble)"
+#' so, the "y otro" is eliminated
+#'
+#' @param text_equation 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+extracting_all_ideal_equations <- function(text_equation) {
+  
+  # First we get the information inside the parenthesis
+  vec_ideals <- str_extract_all(text_equation, "\\([^()]+\\)")[[1]]
+  # Now, we eliminate the parenthesis
+  for(i in 1:length(vec_ideals)){
+    vec_ideals[i] <- substr(vec_ideals[i],2,nchar(vec_ideals[i])-1)
+  }
+  return(vec_ideals)
+}
+

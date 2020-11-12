@@ -22,9 +22,13 @@ output_folder_m2_files <- "Macaulay2_output" # the folder were the output files 
 input_file_name <- "Solving_equation_with_Macaulay2" # name of the .m2 file that we generate
 output_file_name = "Solving_equation_with_Macaulay2_OUT" # name of output txt file
 ```
-Using these variables the function `gen_m2_file` will generate a file named `Solving_equation_with_Macaulay2.m2` with the next content:
-
+Using these variables the function `gen_m2_file` will generate a file named `Solving_equation_with_Macaulay2.m2`
+```
+gen_m2_file(text_to_run,M2_file_name,folder_M2_files, add_date=T)
+```
+this las command generates:
 ![Test Image 1](Figures/Fig_M2_file.png)
+
 
 Moreover, if we have a vector with the equations that we want to solve, we could use the function `gen_eq_solver_text_for_m2_files`. This function use the next input and generates the variable `text_to_run`
 ```

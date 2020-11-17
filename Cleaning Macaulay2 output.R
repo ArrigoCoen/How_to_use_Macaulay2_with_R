@@ -31,9 +31,9 @@ source("Functions.R")
 
 
 
-txt_file <- 'Macaulay2_output/Macaulay2_file_long_output_out.txt'
 txt_file <- '/Users/arrigocoen/Dropbox/GitHub/2020 Arrigo Repos/How_to_use_Macaulay2_with_R/Macaulay2_output/Macaulay2_file_long_output_out.txt'
 txt_file <- 'Macaulay2_output/K4_allN1222_out.txt' # Example with a line of the type: "-----------"
+txt_file <- 'Macaulay2_output/Macaulay2_file_long_output_out.txt'
 
 data_txt = read.table(txt_file, fill = F, header = FALSE , sep = "\t")
 idx_output <- 3
@@ -41,37 +41,35 @@ text_equation <- raw_text_output_vector_text_M2(idx_output,data_txt)
 
 
 
+# Other test for output M2 ------------------------------------------------
 
 
-
+cat("\014") # borra consola 
+rm(list=ls())  # Borra todo
+source("Functions.R")
 
 txt_file <- '/Users/arrigocoen/Dropbox/GitHub/2020 Arrigo Repos/How_to_use_Macaulay2_with_R/Macaulay2_output/Macaulay2_file_long_output_out.txt'
 txt_file <- 'Macaulay2_output/K4_allN1222_out.txt' # Example with a line of the type: "-----------"
-txt_file <- 'Macaulay2_output/Macaulay2_file_long_output_out.txt'
 txt_file <- 'Macaulay2_output/K8_allN11122_out.txt' # Example with a line of the type: "-----------" and exponents
+txt_file <- 'Macaulay2_output/Macaulay2_file_long_output_out.txt'
+
+
 data_txt = read.table(txt_file, fill = F, header = FALSE , sep = "\t")
 idx_output <- 3
 text_equation <- raw_text_output_vector_text_M2(idx_output,data_txt)
 text_equation <- add_powers_and_errase_extra_lines(text_equation) 
-text_equation
+# text_equation
 
 vec_ideals <- extracting_all_ideal_equations(text_equation)
-
-# uhtas -------------------------------------------------------------------
-
+vec_ideals
 
 
-# asntuh ------------------------------------------------------------------
-
-vec <- "(hola) como ((doble) y otro)"
-str_extract_all(vec, "\\([^()]+\\)")[[1]]
+# Generating matrix of equations ------------------------------------------
 
 
+restrictions <- vec_ideals
 
-
-# sntohu ------------------------------------------------------------------
-
-
+all_eq <- paste0(vec_ideals,collapse = ",")
 
 # nastheou ----------------------------------------------------------------
 

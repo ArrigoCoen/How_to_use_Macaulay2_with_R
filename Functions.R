@@ -260,6 +260,12 @@ extracting_all_ideal_equations <- function(text_equation) {
   for(i in 1:length(vec_ideals)){
     vec_ideals[i] <- substr(vec_ideals[i],2,nchar(vec_ideals[i])-1)
   }
+  # At this point we have a long string with all the equations, so we need
+  # to separate it by its commas.
+  # Other cleaning of the
+  vec_ideals <- gsub("\\s+", "", str_trim(vec_ideals)) # elimination of spaces
+  # vec_ideals <- sort(unlist(strsplit(vec_ideals, split=',', fixed=TRUE))) # Separating by commas
+  # vec_ideals <- unique(vec_ideals)
   return(vec_ideals)
 }
 
